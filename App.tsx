@@ -5,7 +5,8 @@ import {
 
 //  components
 import loginComponent from './src/components/login/login';
-import DrawerNavigator from './src/components/dashboard/AppComponents';
+import DrawerNavigator from './src/components/drawerNavigator/drawerNavigator';
+import MyTabs from './src/components/tabNavigator/tabNavigator';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -32,18 +33,19 @@ function App() {
               fontWeight: 'bold',
             },
           }}
-          >
-
+        >
           <Stack.Screen name="Login" component={loginComponent}
             options={{
               title: "Login"
             }}
           />
+
           <Stack.Screen name="Todo List" component={DrawerNavigator}
             options={{
               title: "Todo List"
             }}
           />
+
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

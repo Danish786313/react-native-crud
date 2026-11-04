@@ -12,20 +12,7 @@ import {
 } from "react-native";
 import { supabase } from '../../supabase_config';
 import styles  from './AppCompStyle';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import loginComponent from "../login/login";
-const Drawer = createDrawerNavigator();
-function DrawerNavigator() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Home" component={AppContent} />
-      {/* <Drawer.Screen name="Login" component={loginComponent} /> */}
-      {/* <Drawer.Screen name="Home" component={AppContent} />
-      <Drawer.Screen name="Home" component={AppContent} /> */}
-    </Drawer.Navigator>
-  );
-}
-
+import MyTabs from '../tabNavigator/tabNavigator';
 
 type Todo = {
   id: number;
@@ -308,10 +295,9 @@ function AppContent(props: any) {
           <Text style={styles.emptyText}>No todos added yet.</Text>
         }
       />
-
     
     </View>
   );
 }
 
-export default DrawerNavigator;// export default AppContent;
+export default AppContent;// export default AppContent;
