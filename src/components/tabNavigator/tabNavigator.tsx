@@ -4,6 +4,8 @@ import { Text, PlatformPressable } from '@react-navigation/elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../dashboard/AppComponents';
 import Profile from '../profile/profile';
+import Calculator from '../calculatorComp/calculator';
+import Setting from '../setting/setting';
 
 function MyTabBar({ state, descriptors, navigation }: any) {
   const { colors } = useTheme();
@@ -85,8 +87,8 @@ function MyTabs() {
 
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Profile" component={Profile} />
-
-            {/* <Tab.Screen name="Login" component={loginComponent} /> */}
+            <Tab.Screen name="Calculator" component={Calculator} />
+            <Tab.Screen name="Settings" component={Setting} />
         </Tab.Navigator>
     );
 }

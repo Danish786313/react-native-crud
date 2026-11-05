@@ -14,6 +14,35 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
+export const AboutStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#9295D2',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    >
+      <Stack.Screen name="Login" component={loginComponent}
+        options={{
+          title: "Login"
+        }}
+      />
+
+      <Stack.Screen name="Todo List" component={DrawerNavigator}
+        options={{
+          title: "Todo List"
+        }}
+      />
+
+    </Stack.Navigator>
+  );
+}
+
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -23,30 +52,7 @@ function App() {
       {/* <SafeAreaProvider> */}
       {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} /> */}
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: '#9295D2',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          }}
-        >
-          <Stack.Screen name="Login" component={loginComponent}
-            options={{
-              title: "Login"
-            }}
-          />
-
-          <Stack.Screen name="Todo List" component={DrawerNavigator}
-            options={{
-              title: "Todo List"
-            }}
-          />
-
-        </Stack.Navigator>
+        <AboutStack />
       </NavigationContainer>
     </SafeAreaProvider>
   );
