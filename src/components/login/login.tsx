@@ -1,40 +1,49 @@
 import React from "react";
-import { View, Text, Button, TextInput, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
-
+import { View, Text, Button, TextInput, StyleSheet, Dimensions, TouchableOpacity, ImageBackground } from "react-native";
+const localImage = require('../../../assets/images/background.png'); 
+import constants from '../../utils/constants/contant';
 const { width, height } = Dimensions.get('window');
 
-function loginComponent(props: any) {
+function LoginComponent(props: any) {
 	const [username, setUsername] = React.useState('');
 	const [password, setPassword] = React.useState('');
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.card}>
-				<TextInput
-					placeholder="Enter your username"
-					value={username}
-					onChangeText={setUsername}
-					style={styles.input}
-				/>
-				<TextInput
-					placeholder="Enter your password"
-					secureTextEntry
-					value={password}
-					onChangeText={setPassword}
-					style={styles.input}
-				/>
-				<TouchableOpacity
-					style={styles.loginButton}
-					onPress={() =>
-						props.navigation.navigate('Todo List', {
-							username,
-							password,
-						})
-					}
-				>
-					<Text style={styles.loginText}>Login</Text>
-				</TouchableOpacity>
-			</View>
+			{/* <ImageBackground
+				source={localImage}
+				resizeMode="cover"
+				style={styles.backgroundImage}
+			> */}
+				<Text style={styles.text}>Welcome to the App {}</Text>
+
+				<View style={styles.card}>
+					<TextInput
+						placeholder="Enter your username"
+						value={username}
+						onChangeText={setUsername}
+						style={styles.input}
+					/>
+					<TextInput
+						placeholder="Enter your password"
+						secureTextEntry
+						value={password}
+						onChangeText={setPassword}
+						style={styles.input}
+					/>
+					<TouchableOpacity
+						style={styles.loginButton}
+						onPress={() =>
+							props.navigation.navigate('Todo List', {
+								username,
+								password,
+							})
+						}
+					>
+						<Text style={styles.loginText}>Login</Text>
+					</TouchableOpacity>
+				</View>
+			{/* </ImageBackground> */}
 		</View>
 	)
 }
@@ -44,7 +53,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#D6D7ED',
+		backgroundColor: 'transparent',
 		
 	},
 	card: {
@@ -69,7 +78,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 	loginButton: {
-		backgroundColor: '#9395CE',
+		backgroundColor: '#7B3BF0',
 		borderRadius: 10,
 		padding: 10,
 		marginTop: 10,
@@ -79,10 +88,21 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	loginText: {
-		color: '#fff',
+		color: '#FD8BFA',
 		fontSize: 16,
 		fontWeight: 'bold',
 	},
+	backgroundImage: {
+		width: width,
+		height: height,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	text: {
+		fontSize: 24,
+		fontWeight: 'bold',
+		color: constants.textColor,
+	},
 });
 
-export default loginComponent;
+export default LoginComponent;

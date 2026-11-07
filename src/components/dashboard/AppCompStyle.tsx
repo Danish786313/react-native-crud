@@ -1,83 +1,79 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+import constants from '../../utils/constants/contant';
 
-export  default StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
+const { width, height } = Dimensions.get('window');
 
-  button: {
-    marginLeft: 2,
-    marginRight: 2,
-  },
+export default StyleSheet.create({
 
-  heading: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 30,
-    marginBottom: 20,
-    color: '#222',
-  },
+    backgroundImage: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+    },
 
-  inputContainer: {
-    paddingHorizontal: 20,
-  },
+    container: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: 'transparent',
+    },
 
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
-    padding: 12,
-    borderRadius: 8,
-    fontSize: 16,
-    color: '#222',
-  },
+    heading: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+        textAlign: 'center',
+        marginTop: 30,
+        marginBottom: 25,
+    },
 
-  buttonContainer: {
-    marginTop: 12,
-  },
+    addTodoContainer: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 25,
+    },
 
-  list: {
-    padding: 20,
-  },
+    input: {
+        width: '100%',
+        height: 50,
+        borderWidth: 1,
+        borderColor: '#7B3BF0',
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        backgroundColor: '#FFFFFF',
+        marginBottom: 15,
+    },
 
-  todoItem: {
-    backgroundColor: '#fff',
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    display: 'flex',
-    gap: 20,
-  },
+    buttonContainer: {
+        width: '100%',
+        alignItems: 'center',
+    },
 
-  todoText: {
-    fontSize: 20,
-    color: '#222',
-  },
+    loginButton: {
+        width: '100%',
+        backgroundColor: '#7B3BF0',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
 
-  emptyText: {
-    textAlign: 'center',
-    color: '#777',
-    marginTop: 20,
-    fontSize: 16,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalView: {
-    backgroundColor: 'skyblue',
-    padding: 40,
-    borderRadius: 20,
-    shadowColor: 'black',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+    loginText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    todoItem: {
+      backgroundColor: '#fff',
+      marginTop: 10,
+      borderRadius: 20,
+      padding: 10
+    },
+    todoText: {
+      flex:  1
+    },
+    list: {},
+    centeredView: {},
+    modalView: {},
+    textStyle: {}
+
 });

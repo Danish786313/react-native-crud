@@ -1,19 +1,26 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import AppContent from '../dashboard/AppComponents';
-import loginComponent from '../login/login';
 import MyTabs from '../tabNavigator/tabNavigator';
 import Profile from '../profile/profile';
+import Calculator from '../calculatorComp/calculator';
+import Setting from '../setting/setting';
+import constants from '../../utils/constants/contant';
 
 const Drawer = createDrawerNavigator();
 function DrawerNavigator() {
 	return (
-		<Drawer.Navigator>
-			{/* <Drawer.Screen name="Home" component={AppContent} /> */}
+		<Drawer.Navigator screenOptions={{
+			headerStyle: {
+				backgroundColor: constants.buttonColor,
+			},
+		}}>
+
 			<Drawer.Screen name="Home" component={MyTabs} />
-			{/* <Drawer.Screen name="Login" component={loginComponent} /> */}
+
 			<Drawer.Screen name="Profile" component={Profile} />
+			<Drawer.Screen name="Calculator" component={Calculator} />
+			<Drawer.Screen name="Settings" component={Setting} />
 		</Drawer.Navigator>
 	);
 }
 
-export default DrawerNavigator;// export default AppContent;
+export default DrawerNavigator;

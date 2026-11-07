@@ -83,6 +83,12 @@ function MyTabs() {
                 headerShown: false,
                 tabBarActiveTintColor: '#9295D2',
                 tabBarInactiveTintColor: '#777',
+                // headerStyle: {
+                //     backgroundColor: '#9295D2',
+                // },
+              
+            
+        
             }}>
 
             <Tab.Screen name="Home" component={Home} />

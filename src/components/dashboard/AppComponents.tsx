@@ -8,11 +8,18 @@ import {
     Button, 
     Switch, 
     FlatList,
-    ActivityIndicator
+    ActivityIndicator,
+    ImageBackground,
+    Dimensions,
+    ScrollView,
+    TouchableOpacity
 } from "react-native";
 import { supabase } from '../../supabase_config';
 import styles  from './AppCompStyle';
 import MyTabs from '../tabNavigator/tabNavigator';
+const localImage = require('../../../assets/images/background.png'); 
+const { width, height } = Dimensions.get('window');
+
 
 type Todo = {
   id: number;
@@ -197,107 +204,175 @@ function AppContent(props: any) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Todo List, {props.route?.params?.username}</Text>
+    <View style={{ flex: 1 }}>
+      <ImageBackground
+        source={localImage}
+        resizeMode="cover"
+        style={styles.backgroundImage}
+      >
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
 
-      <Modal visible={showEditModal} transparent={true} animationType="slide">
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.textStyle}>Update Todo</Text>
+          <Text style={styles.heading}>
+            {props.route?.params?.username || 'Your'} Todos
+          </Text>
+
+          {/* Edit Todo Modal */}
+          <Modal
+            visible={showEditModal}
+            transparent={true}
+            animationType="slide"
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.textStyle}>Update Todo</Text>
+
+                <TextInput
+                  placeholder="Enter a new todo..."
+                  value={editTodo}
+                  onChangeText={setEditTodo}
+                  style={styles.input}
+                  placeholderTextColor="#888"
+                />
+
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  width: '100%'
+                }}>
+                  <View style={{ flex: 1, marginRight: 5 }}>
+                    <Button
+                      title="Update"
+                      onPress={() => {
+                        updateTodo(editTodoId, editTodo);
+                        setShowEditModal(false);
+                      }}
+                      disabled={!editTodo.trim()}
+                    />
+                  </View>
+
+                  <View style={{ flex: 1, marginLeft: 5 }}>
+                    <Button
+                      title="Cancel"
+                      color="red"
+                      onPress={() => setShowEditModal(false)}
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Modal>
+
+          {/* Add Todo Section */}
+          <View style={styles.addTodoContainer}>
+
             <TextInput
               placeholder="Enter a new todo..."
-              value={editTodo}
-              onChangeText={setEditTodo}
+              value={newTodo}
+              onChangeText={setNewTodo}
               style={styles.input}
               placeholderTextColor="#888"
             />
-            <Button
-              title="Close Modal"
-              onPress={() => setShowEditModal(false)}
-            />
-            <Button
-                title="Edit"
-                onPress={() => updateTodo(editTodoId, editTodo)}
-              /> 
+
+            <View style={styles.buttonContainer}>
+              {loading ? (
+                <ActivityIndicator
+                  size="large"
+                  color="#7B3BF0"
+                />
+              ) : (
+                <TouchableOpacity
+                  style={styles.loginButton}
+                  onPress={addTodo}
+                >
+                  <Text style={styles.loginText}>
+                    Add Todo
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+
           </View>
-        </View>
-      </Modal>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Enter a new todo..."
-          value={newTodo}
-          onChangeText={setNewTodo}
-          style={styles.input}
-          placeholderTextColor="#888"
-        />
+          {/* Todo List */}
+          <FlatList
+            data={todos}
+            keyExtractor={item => String(item.id)}
+            scrollEnabled={false}
+            contentContainerStyle={styles.list}
+            renderItem={({ item }) => (
+              <View style={styles.todoItem}>
 
-        <View style={styles.buttonContainer}>
-          {loading ? (
-            <ActivityIndicator size="large" color="#007AFF" />
-          ) : (
-            <Button
-              title="Add Todo"
-              onPress={addTodo}
-              disabled={!newTodo.trim()}
-            />
-          )}
-        </View>
-      </View>
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: item.isCompleted
+                        ? '#4CAF50'
+                        : '#FF5722',
+                    }}
+                  >
+                    {item.isCompleted ? 'Completed' : 'Pending'}
+                  </Text>
 
-      <FlatList
-        data={todos}
-        keyExtractor={item => String(item.id)}
-        contentContainerStyle={styles.list}
-        renderItem={({ item }) => (
-          <View style={styles.todoItem}>
-            <View>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: item.isCompleted ? '#4CAF50' : '#FF5722',
-                }}
-              >
-                {item.isCompleted ? 'Completed' : 'Pending'}
+                  <Text style={styles.todoText}>
+                    {item.name}
+                  </Text>
+                </View>
+
+                <View style={{
+                  flexDirection: 'row',
+                  marginTop: 10,
+                  gap: 10,
+                  alignItems: 'center',
+                }}>
+                  <Switch
+                    value={item.isCompleted}
+                    onValueChange={() =>
+                      updateToggle(item.id, item.name)
+                    }
+                    trackColor={{
+                      false: '#767577',
+                      true: '#4CAF50'
+                    }}
+                    thumbColor={
+                      item.isCompleted
+                        ? '#ffffff'
+                        : '#f4f3f4'
+                    }
+                  />
+
+                  <Button
+                    title="Edit"
+                    onPress={() =>
+                      openEditModal(item.id, item.name)
+                    }
+                  />
+
+                  <Button
+                    title="Delete"
+                    color="red"
+                    onPress={() => deleteTodo(item.id)}
+                  />
+                </View>
+
+              </View>
+            )}
+            ListEmptyComponent={
+              <Text style={styles.emptyText}>
+                No todos added yet.
               </Text>
-              <Text style={styles.todoText}>{item.name}</Text>
-            </View>
+            }
+          />
 
-            <View
-              style={{
-                flexDirection: 'row',
-                // justifyContent: 'space-between',
-                marginTop: 10,
-                gap: 10,
-                display: 'flex',
-              }}
-            >
-              <Switch
-                value={item.isCompleted}
-                onValueChange={() => updateToggle(item.id, item.name)}
-                trackColor={{ false: '#767577', true: '#4CAF50' }}
-                thumbColor={item.isCompleted ? '#ffffff' : '#f4f3f4'}
-              />
-             
-              <Button
-                title="Edit"
-                onPress={() => openEditModal(item.id, item.name)}
-              />
-              <Button
-                title="Delete"
-                color="red"
-                onPress={() => deleteTodo(item.id)}
-              />
-            </View>
-          </View>
-        )}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>No todos added yet.</Text>
-        }
-      />
-    
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 }
+
 
 export default AppContent;// export default AppContent;
